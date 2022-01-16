@@ -1,5 +1,5 @@
 {
-  "name": "ansible-api",
+  "name": "managed-node-api",
   "version": "0.0.2",
   "description": "A NestJS project",
   "author": "Sebastian Szafranski",
@@ -26,7 +26,8 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^8.2.3",
     "@nestjs/platform-express": "^8.0.0",
-    "execa": "^2.0.0-alpha.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
@@ -44,7 +45,6 @@
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "execa": "^2.0.0-alpha.0",
     "jest": "^27.2.5",
     "prettier": "^2.3.2",
     "run-script-webpack-plugin": "^0.0.11",
