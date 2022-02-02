@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import {BadRequestException, Controller, Get, Param} from '@nestjs/common';
 import { AppService } from './app.service';
+import {StatsDto} from "./dto/stats.dto";
 
 @Controller()
 export class AppController {
@@ -11,11 +12,25 @@ export class AppController {
   }
 
   /**
-   * This method checks system usage on concrete node
-   * @param ip
+   * This method retrieve usage of concrete system component
    */
-  @Post('/check/:ip')
-  async checkSystemUsageOnIp(@Param('ip') ip: string): Promise<string> {
-    return "checking system usage";
+  @Get('/system-usage/:component')
+  async getConcreteUsage(@Param('component') component: string): Promise<string> {
+    switch (component) {
+      case 'cpu':
+        return this.appService.getCpuInfo();
+      case 'ram':
+        return this.appService.getMemInfo();
+      default:
+        throw new BadRequestException('Bad component');
+    }
+  }
+
+  /**
+   * This method retrieve system usage (cpu & ram)
+   */
+  @Get('/system-usage')
+  async getSystemUsage(): Promise<StatsDto> {
+    return this.appService.getSystemUsage();
   }
 }
