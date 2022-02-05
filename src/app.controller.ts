@@ -14,7 +14,7 @@ export class AppController {
   /**
    * This method retrieve usage of concrete system component
    */
-  @Get('/system-usage/:component')
+  @Get('/os-monitor/:component')
   async getConcreteUsage(@Param('component') component: string): Promise<string> {
     switch (component) {
       case 'cpu':
@@ -29,7 +29,7 @@ export class AppController {
   /**
    * This method retrieve system usage (cpu & ram)
    */
-  @Get('/system-usage')
+  @Get('/os-monitor')
   async getSystemUsage(): Promise<StatsDto> {
     return this.appService.getSystemUsage();
   }
