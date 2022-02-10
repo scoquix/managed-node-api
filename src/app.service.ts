@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {StatsDto} from "./dto/stats.dto";
-import {currentLoad, mem} from "systeminformation";
+import {currentLoad, fsSize, mem} from "systeminformation";
 
 @Injectable()
 export class AppService {
@@ -12,6 +12,7 @@ export class AppService {
     const stats = new StatsDto();
     stats.ramUsage = await this.getMemInfo();
     stats.cpuUsage = await this.getCpuInfo();
+    stats.fsUsage = await this.getFileSystemInfo();
     return stats;
   }
 
@@ -23,7 +24,22 @@ export class AppService {
 
   async getMemInfo(): Promise<string> {
     const memInfo = await mem();
-    const memInfoInMB = memInfo.free / 1024 / 1024;
-    return memInfoInMB.toFixed(0).concat(' MB');
+    return this.formatBytes(memInfo.free);
+  }
+
+  async getFileSystemInfo(): Promise<string> {
+    const diskInfo = await fsSize();
+    const usedSpace = this.formatBytes(diskInfo[0].used);
+    const fullSpace = this.formatBytes(diskInfo[0].size);
+    return [usedSpace, fullSpace].join(" / ");
+  }
+
+  formatBytes(bytes, decimals = 2): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 }
