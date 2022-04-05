@@ -1,18 +1,18 @@
-import {Injectable} from "@nestjs/common";
-import {StatsDto} from "./dto/stats.dto";
-import {currentLoad, fsSize, mem} from "systeminformation";
+/**
+ * Copyright ⓒ 2022 Sebastian Szafrański - All Rights Reserved
+ */
+import { Injectable } from "@nestjs/common";
+import { StatsDto } from "./dto/stats.dto";
+import { currentLoad, fsSize, mem } from "systeminformation";
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Welcome in managed-node-api!';
-  }
 
   async getSystemUsage(): Promise<StatsDto> {
     const stats = new StatsDto();
     stats.ramUsage = await this.getMemInfo();
     stats.cpuUsage = await this.getCpuInfo();
-    stats.fsUsage = await this.getFileSystemInfo();
+    stats.diskUsage = await this.getFileSystemInfo();
     return stats;
   }
 

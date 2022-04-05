@@ -2,13 +2,13 @@
 Description=managed-node-api
 
 [Service]
-ExecStart=/home/seb/managed-node-api/dist/main.js
+ExecStart=/usr/managed-node-api/dist/main.js
 Restart=always
 User=monitor
 Group=monitor
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/home/seb/managed-node-api
+WorkingDirectory=/usr/managed-node-api
 
 [Install]
 WantedBy=multi-user.target

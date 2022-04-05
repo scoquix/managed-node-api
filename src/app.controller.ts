@@ -1,15 +1,13 @@
-import {BadRequestException, Controller, Get, Param} from '@nestjs/common';
-import { AppService } from './app.service';
-import {StatsDto} from "./dto/stats.dto";
+/**
+ * Copyright ⓒ 2022 Sebastian Szafrański - All Rights Reserved
+ */
+import { Controller, Get, Param } from "@nestjs/common";
+import { AppService } from "./app.service";
+import { StatsDto } from "./dto/stats.dto";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 
   /**
    * This method retrieve usage of concrete system component
@@ -22,7 +20,7 @@ export class AppController {
       case 'ram':
         return this.appService.getMemInfo();
       default:
-        throw new BadRequestException('Bad component');
+        throw new Error('Bad component');
     }
   }
 
