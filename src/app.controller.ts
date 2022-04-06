@@ -1,7 +1,7 @@
 /**
  * Copyright ⓒ 2022 Sebastian Szafrański - All Rights Reserved
  */
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, HttpException, Param } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { StatsDto } from "./dto/stats.dto";
 
@@ -20,7 +20,7 @@ export class AppController {
       case 'ram':
         return this.appService.getMemInfo();
       default:
-        throw new Error('Bad component');
+        throw new HttpException('This component does not exist', 404);
     }
   }
 
